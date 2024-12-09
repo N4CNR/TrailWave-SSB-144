@@ -14,11 +14,12 @@ void PCF8575Debounce::begin(uint8_t address, uint8_t intPin) {
   for (int i = 0; i < 16; ++i) {
     buttonStates[i] = 1;
   }
+  pinMode(intPin, INPUT_PULLUP); // Added this...
   attachInterrupt(digitalPinToInterrupt(intPin), pcfISR, CHANGE);
 }
 
 uint16_t PCF8575Debounce::readPCF() {
-  Wire.requestFrom(address, 2);
+  Wire.requestFrom(address, static_cast<size_t>(2));
   uint16_t data = Wire.read();
   data |= (Wire.read() << 8);
   return data;
