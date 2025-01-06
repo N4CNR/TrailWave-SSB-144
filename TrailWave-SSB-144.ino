@@ -6,7 +6,11 @@ TrailRadio trailRadio;
 
 PCF8575Debounce pcf;
 
+//Display setup
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
+
+//si5351
+Si5351 si5351;
 
 void getInput() {
   if (pcf.readPin(FREQ_DOWN_PIN)) {
@@ -110,7 +114,7 @@ void setup() {
   u8g2.begin();
   u8g2.clear();
   u8g2.clearBuffer();
-  trailRadio.init(&u8g2);
+  trailRadio.init(&si5351, &u8g2);
 }
 
 void loop() {
